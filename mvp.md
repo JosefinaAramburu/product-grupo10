@@ -5,7 +5,7 @@
 - **Acceso o forma de ejecución:** https://chatbot-lovat-three-39.vercel.app/ — se entra solo con el nombre, sin API Key (la clave está en el servidor).
 - **Recorrido:** inicio (ingresa su nombre) → acción (escribe su duda) → resultado (respuesta con lo que está cargado, o una pregunta para conocer su caso, o aviso de que no hay información).
 - **Funciona / manual o simulado / fuera de alcance:**
-  - *Funciona:* chat con IA, el bot recuerda la conversación, hace repreguntas sobre el caso del alumno, calcula faltas (25% del total de clases, redondeado hacia abajo) y avisa cuando no tiene información.
+  - *Funciona:* chat con IA, el bot recuerda la conversación, hace repreguntas sobre el caso del alumno, calcula faltas (25% del total de clases, redondeado hacia abajo; en materias de doble falta usa una cuenta prudente y avisa que no está confirmada) y avisa cuando no tiene información.
   - *Manual o simulado:* la base de conocimiento está cargada a mano. El Grupo A viene de la versión 1 del bot; el Grupo B son respuestas orientativas **sin fuente oficial confirmada** y el bot las presenta como tales. Los datos del alumno (cantidad de clases, faltas) los aporta el propio alumno en la conversación.
   - *Sin verificar en esta versión:* el registro automático de consultas en Google Sheets.
   - *Fuera de alcance:* conexión a sistemas de la facultad, login institucional, envío de mails a secretaría, paneles de métricas.
@@ -25,5 +25,11 @@
   - *Lo que propone Valen:* agregar al bot el syllabus de cada materia que se dicta.
   - *Obstáculos que observamos:* (1) la respuesta muestra asteriscos (`**cada cátedra**`) porque la página no interpreta el formato; (2) el bot afirmó "no hay una regla única en toda la FCE", algo que no está en su base (la base solo dice que depende de la cátedra); (3) no aclaró que el dato sobre promedio era orientativo.
   - *Lectura del equipo (Josefina):* la derivación a la cátedra fue correcta, pero el bot no mencionó el syllabus, que es el primer lugar donde mirar.
+- **Segundo ajuste, a partir de lo observado con Valen y de nuestras propias pruebas:**
+  - *Cambios en las reglas del bot:* texto plano sin asteriscos; no agregar generalizaciones que su base no dice; preguntar siempre si la materia cuenta doble falta antes de calcular; en doble falta, indicar también a cuántas clases completas equivale el máximo de faltas.
+  - *Hallazgo en la prueba (Josefina, Teología, 15 clases, doble falta):* el bot usó una cuenta distinta a la de una prueba anterior (14 clases): antes calculó el 25% sobre las faltas posibles (14 × 2 = 28 → 7 faltas → 3 clases) y esta vez sobre las clases (25% de 15 → 3 faltas → 1 clase). Dos resultados distintos para el mismo tipo de pregunta. Nuestra base no confirma cuál es la regla correcta.
+  - *Decisión del equipo (Josefina):* usar siempre la cuenta más baja, por prudencia, y que el bot avise que no está confirmada. No es una regla oficial de la facultad.
+  - *Nueva prueba:* 15 clases, una falta por clase → 3 faltas, 3 clases (con la cuenta mostrada y sin asteriscos). 15 clases, doble falta → 3 faltas, 1 clase completa, "estimación más prudente", y aviso de que la base no confirma cómo se aplica y de confirmar en secretaría. Resultado consistente con la regla elegida.
+  - *Sin repetir todavía:* la pregunta del promedio de una materia (la de Valen) y la prueba con 14 clases en doble falta.
 - **Prueba con alguien del segmento fuera del equipo:** pendiente (Clase 8).
-- **Próximo ajuste (a decidir por el equipo):** (a) que el bot no use formato con asteriscos y no afirme cosas que su base no dice; (b) que siempre pregunte si la materia cuenta doble falta antes de calcular; (c) evaluar si se puede cargar el syllabus de las materias, que es lo que pidió Valen. Después, probarlo con personas ajenas al equipo sin explicarles cómo usarlo.
+- **Próximo ajuste (a decidir por el equipo):** (a) confirmar con secretaría o con el reglamento cómo se aplica la doble falta, para reemplazar la cuenta prudente por la regla real; (b) evaluar si se puede cargar el syllabus de las materias, que es lo que pidió Valen; (c) volver a probar la pregunta del promedio. Después, probar el bot con personas ajenas al equipo sin explicarles cómo usarlo.
