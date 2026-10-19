@@ -6,8 +6,8 @@
 - **Recorrido:** inicio (ingresa su nombre) → acción (escribe su duda) → resultado (respuesta con lo que está cargado, o una pregunta para conocer su caso, o aviso de que no hay información).
 - **Funciona / manual o simulado / fuera de alcance:**
   - *Funciona:* chat con IA, el bot recuerda la conversación, hace repreguntas sobre el caso del alumno, calcula faltas (25% del total de clases, redondeado hacia abajo; en materias de doble falta usa una cuenta prudente y avisa que no está confirmada) y avisa cuando no tiene información.
-  - *Manual o simulado:* la base de conocimiento está cargada a mano. El Grupo A viene de la versión 1 del bot; el Grupo B son respuestas orientativas **sin fuente oficial confirmada** y el bot las presenta como tales. Los datos del alumno (cantidad de clases, faltas) los aporta el propio alumno en la conversación.
-  - *Sin verificar en esta versión:* el registro automático de consultas en Google Sheets.
+  - *Manual o simulado:* la base de conocimiento está cargada a mano. Desde la v3 (Clase 8) incluye el Reglamento de Carreras de Grado de la FCE (v. 2023) y los planes de estudio de las 5 carreras (plan anterior y plan 2026) como fuentes oficiales, y una sección aparte de información **sin fuente oficial** que el bot presenta como orientativa. Los datos del alumno (cantidad de clases, faltas, carrera, plan) los aporta el propio alumno en la conversación.
+  - *Registro:* el Google Sheet registra las consultas (verificado en la Clase 8). La columna "¿Derivó a secretaría?" marca "Sí" en todas las filas y no se usa como dato.
   - *Fuera de alcance:* conexión a sistemas de la facultad, login institucional, envío de mails a secretaría, paneles de métricas.
 - **Evidencia disponible y duda pendiente:** en la prueba anterior (versión 1) 0 de 9 consultas se resolvieron sin derivar. Esta versión cambia cómo responde el bot, pero todavía no se probó con participantes. Duda pendiente: si el estudiante confía en la respuesta del bot para decidir, o igual la confirma con secretaría.
 - **Qué medimos:** personas que intentan y completan la consulta; si a la persona se le resolvió la duda (preguntándoselo al final); % de consultas sin derivación sin contar saludos. Limitación: la marca de "derivada" del registro es automática (busca la palabra "secretaría") y puede marcar como derivada una respuesta que sí resolvió la duda.
@@ -31,5 +31,13 @@
   - *Decisión del equipo (Josefina):* usar siempre la cuenta más baja, por prudencia, y que el bot avise que no está confirmada. No es una regla oficial de la facultad.
   - *Nueva prueba:* 15 clases, una falta por clase → 3 faltas, 3 clases (con la cuenta mostrada y sin asteriscos). 15 clases, doble falta → 3 faltas, 1 clase completa, "estimación más prudente", y aviso de que la base no confirma cómo se aplica y de confirmar en secretaría. Resultado consistente con la regla elegida.
   - *Sin repetir todavía:* la pregunta del promedio de una materia (la de Valen) y la prueba con 14 clases en doble falta.
-- **Prueba con alguien del segmento fuera del equipo:** pendiente (Clase 8).
+- **Prueba con alguien del segmento fuera del equipo:** hecha en la Clase 8 (2 rondas de 4 estudiantes de la FCE; ver `pruebas-y-mejoras-mvp.md`).
 - **Próximo ajuste (a decidir por el equipo):** (a) confirmar con secretaría o con el reglamento cómo se aplica la doble falta, para reemplazar la cuenta prudente por la regla real; (b) evaluar si se puede cargar el syllabus de las materias, que es lo que pidió Valen; (c) volver a probar la pregunta del promedio. Después, probar el bot con personas ajenas al equipo sin explicarles cómo usarlo.
+
+
+## Versión actual (Clase 8)
+
+- **Versión:** v3.1 (commit `0700335`, 19/10/2026). Puntos de recuperación: v3 = `15848af`; v2.2 = `4d7ab14`.
+- **Acceso:** sin cambios, https://chatbot-lovat-three-39.vercel.app/
+- **Qué cambió:** base ampliada con el reglamento y los planes de estudio; el bot cita el artículo o el plan; deriva a la oficina que indica el reglamento (por ejemplo, Secretaría de Alumnos) en lugar de "secretaría académica"; reglas para correlativas, finales, ausentes, doble titulación y comparación de planes; filtro de asteriscos.
+- **Resultado:** detalle en `pruebas-y-mejoras-mvp.md`. Valor 0 de 4 (v2.2) → 2 de 4 (v3.1); consultas que solo derivaron 7 de 7 → 0 de 5. Duda nueva: 3 de 5 respuestas incluyeron datos que no están en la base.
